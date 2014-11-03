@@ -43,6 +43,17 @@ class LinkedList
 		@index
 	end
 
+  def get(i)
+    @index ||= 0
+    @hash ||= {} 
+    until self.first_link.last?
+      @hash[@index] = self.first_link
+      @index += 1
+      next_link
+    end 
+    @hash[i]
+  end
+
 	private
 
 	def next_link

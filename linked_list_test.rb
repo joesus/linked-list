@@ -8,6 +8,8 @@ class LinkedListTest < MiniTest::Unit::TestCase
 		@link1 = Link.new("first link")
 		@link2 = Link.new("second link")
 		@link3 = Link.new("third link")
+    @link4 = Link.new("fourth link")
+    @link5 = Link.new("fifth link")
 		@list = LinkedList.new(@link1)
 	end
 
@@ -25,12 +27,35 @@ class LinkedListTest < MiniTest::Unit::TestCase
   end
 
   def test_removing_link_decreases_the_size
+    @list.add(@link2)
   	@list.remove(@link2)
   	assert_equal 1, @list.size
+  end
+
+  def test_chaining_add
+    @list.add(@link2).add(@link3)
+  	assert_equal 3, @list.size
   end
 
   def test_index_of_returns_the_correct_index
   	@list.add(@link2).add(@link3)
   	assert_equal 2, @list.index_of(@link3)
+  end
+
+  def test_removing_third_link_works
+    @list.add(@link2).add(@link3).add(@link4)
+    @list.remove(@link3)
+    assert_equal 3, @list.size
+  end
+
+  def test_removing_fourth_link_works
+    @list.add(@link2).add(@link3).add(@link4).add(@link5)
+    @list.remove(@link4)
+    assert_equal 4, @list.size
+  end
+  
+  def test_get_index
+    @list.add(@link2).add(@link3).add(@link4).add(@link5)
+    assert_equal @link2, @list.get(1)
   end
 end
