@@ -32,6 +32,12 @@ class LinkedListTest < MiniTest::Unit::TestCase
   	assert_equal 1, @list.size
   end
 
+  def test_removing_first_link_decreases_size
+    @list.add(@link2)
+    @list.remove(@link1)
+    assert_equal 1, @list.size
+  end
+
   def test_chaining_add
     @list.add(@link2).add(@link3)
   	assert_equal 3, @list.size
@@ -56,6 +62,6 @@ class LinkedListTest < MiniTest::Unit::TestCase
   
   def test_get_index
     @list.add(@link2).add(@link3).add(@link4).add(@link5)
-    assert_equal @link2, @list.get(1)
+    assert_equal @link3, @list.get(2)
   end
 end

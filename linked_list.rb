@@ -16,7 +16,11 @@ class LinkedList
 	end
 
 	def remove(link)
-		self.first_link.remove(link)
+    if link == first
+      next_link
+    else
+		  self.first_link.remove(link)
+    end
 	end
 
 	def size
