@@ -3,7 +3,7 @@ require_relative 'link'
 class LinkedList
 	attr_accessor :first_link
 
-	def initialize(link)
+	def initialize(link=nil)
 		@first_link = link
 	end
 
