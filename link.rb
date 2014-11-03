@@ -22,7 +22,13 @@ class Link
 
 	def remove(link)
 		if self.next_link == link
-			self.next_link = link.next_link
-		end
+      if link.last?
+        self.next_link = nil
+      else
+        self.next_link = link.next_link
+      end
+    else
+      self.next_link.remove(link)
+    end
 	end
 end
