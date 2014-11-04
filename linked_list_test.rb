@@ -28,19 +28,19 @@ class LinkedListTest < MiniTest::Unit::TestCase
 
   def test_removing_link_decreases_the_size
     @list.add(@link2)
-  	@list.remove(@link2)
+  	@list.remove(@link2, @list)
   	assert_equal 1, @list.size
   end
 
   def test_removing_first_link_decreases_size
     @list.add(@link2)
-    @list.remove(@link1)
+    @list.remove(@link1, @list)
     assert_equal 1, @list.size
   end
 
   def test_removing_first_link_changes_first_link
     @list.add(@link2).add(@link3)
-    @list.remove(@link1)
+    @list.remove(@link1, @list)
     assert_equal @link2, @list.first
   end
 
@@ -56,13 +56,13 @@ class LinkedListTest < MiniTest::Unit::TestCase
 
   def test_removing_third_link_works
     @list.add(@link2).add(@link3).add(@link4)
-    @list.remove(@link3)
+    @list.remove(@link3, @list)
     assert_equal 3, @list.size
   end
 
   def test_removing_fourth_link_works
     @list.add(@link2).add(@link3).add(@link4).add(@link5)
-    @list.remove(@link4)
+    @list.remove(@link4, @list)
     assert_equal 4, @list.size
   end
   

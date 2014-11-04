@@ -15,12 +15,8 @@ class LinkedList
 		self.first_link.add(link)
 	end
 
-	def remove(link)
-    if link == first
-      self.first_link = self.first_link.next_link
-    else
-		  self.first_link.remove(link)
-    end
+	def remove(link, list)
+		self.first_link.remove(link, self)
 	end
 
 	def size(counter=1)

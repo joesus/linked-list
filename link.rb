@@ -20,15 +20,13 @@ class Link
 		end
 	end
 
-	def remove(link)
-		if self.next_link == link
-      if link.last?
-        self.next_link = nil
-      else
-        self.next_link = link.next_link
-      end
+	def remove(link, list)
+    if list.first_link == link 
+      list.first_link = link.next_link
+    elsif self.next_link == link 
+      self.next_link = link.next_link
     else
-      self.next_link.remove(link)
+      self.next_link.remove(link, list)
     end
 	end
 
