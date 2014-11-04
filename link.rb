@@ -31,4 +31,29 @@ class Link
       self.next_link.remove(link)
     end
 	end
+
+  def get(index, position=0)
+    if index == position
+      self
+    else
+      self.next_link.get(index, position + 1)
+    end
+  end
+
+  def index_of(searched_link, index)
+    if self == searched_link
+      index
+    else
+      self.next_link.index_of(searched_link, index + 1)
+    end
+  end
+
+  def size(counter)
+    if self.last?
+      counter
+    else
+      self.next_link.size(counter+1)
+    end
+  end
+
 end

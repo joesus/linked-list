@@ -17,50 +17,27 @@ class LinkedList
 
 	def remove(link)
     if link == first
-      next_link
+      self.first_link = self.first_link.next_link
     else
 		  self.first_link.remove(link)
     end
 	end
 
-	def size
-		@number_of_links ||= 1
-		if self.first_link.next_link.nil?
-			@number_of_links
-		else
-			next_link
-			@number_of_links += 1
-			size
-		end
-		@number_of_links
+	def size(counter=1)
+    self.first_link.size(counter)
 	end
 
-	def index_of(searched_link)
-		@index ||= 0
-		if self.first_link == searched_link
-			@index
-		else
-			next_link
-			@index += 1
-			index_of(searched_link)
-		end
-		@index
-	end
+	def index_of(searched_link, position=0)
+    self.first_link.index_of(searched_link, position)
+  end
 
-  def get(i)
-    @index ||= 0
-    @hash ||= {} 
-    until self.first_link.last?
-      @hash[@index] = self.first_link
-      @index += 1
-      next_link
-    end 
-    @hash[i]
+  def get(index, position=0)
+    self.first_link.get(index, position)
   end
 
 	private
 
-	def next_link
+	def set_pointer_to_next_link
 		self.first_link = self.first_link.next_link
 	end
 end
