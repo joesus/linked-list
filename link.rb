@@ -1,34 +1,42 @@
 require "pry-nav"
 
 class Link
-	attr_accessor :next_link, :contents
+  attr_accessor :next_link, :contents
 
-	def initialize(contents, next_link=nil)
-		@next_link = next_link
-		@contents = contents
-	end
+  def initialize(contents, next_link=nil)
+    @next_link = next_link
+    @contents = contents
+  end
 
-	def last?
-		self.next_link.nil?
-	end
+  def last?
+    self.next_link.nil?
+  end
 
-	def add(link)
-		if self.last?
-			self.next_link = link
-		else
-			self.next_link.add(link)
-		end
-	end
-
-	def remove(link, list)
-    if list.first_link == link 
-      list.first_link = link.next_link
-    elsif self.next_link == link 
-      self.next_link = link.next_link
+  def add(link)
+    if self.last?
+      self.next_link = link
     else
-      self.next_link.remove(link, list)
+      self.next_link.add(link)
     end
-	end
+  end
+
+  def remove(link, parent_link)
+    if self == link
+      parent_link.next_link = link.next_link
+    else
+      self.next_link.remove(link, self)
+    end
+  end
+
+  # def remove(link, list)
+  #   if list.first_link == link
+  #     list.first_link = link.next_link
+  #   elsif self.next_link == link
+  #     self.next_link = link.next_link
+  #   else
+  #     self.next_link.remove(link, list)
+  #   end
+  # end
 
   def get(index, position=0)
     if index == position
