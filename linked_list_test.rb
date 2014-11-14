@@ -74,4 +74,15 @@ class LinkedListTest < MiniTest::Unit::TestCase
     @list.add(@link2).add(@link3).add(@link4).add(@link5)
     assert_equal @link3, @list.get(2)
   end
+
+  def test_adding_link_sets_previous_link_to_self
+    @list.add(@link2)
+    assert_equal @link2.prev_link, @list.first_link
+  end
+
+  def test_first_method_determines_link_position
+    @list.add(@link2)
+    assert_equal @link1.first?, true
+    assert_equal @link2.first?, false
+  end
 end

@@ -6,6 +6,8 @@ class LinkedList
   alias :next_link= :first_link=
 
   def initialize(link=nil)
+    # sets the first link's parent link to the linked list
+    link.prev_link = self
     @first_link = link
   end
 
@@ -14,22 +16,31 @@ class LinkedList
   end
 
   def add(link)
-    self.first_link.add(link)
+    if self.first_link
+      self.first_link.add(link)
+    else
+      self.first_link = link
+    end
+
   end
 
   def remove(link)
-    self.first_link.remove(link, self)
+    self.first_link ? self.first_link.remove(link) : false
   end
 
-  def size(counter=1)
-    self.first_link.size(counter)
+  def size
+    self.first_link ? self.first_link.size : 0
   end
 
   def index_of(searched_link)
     self.first_link.index_of(searched_link, 0)
+  rescue NoMethodError
+    nil
   end
 
   def get(index)
     self.first_link.get(index, 0)
+  rescue NoMethodError
+    nil
   end
 end

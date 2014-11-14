@@ -1,11 +1,16 @@
 require "pry-nav"
 
 class Link
-  attr_accessor :next_link, :contents
+  attr_accessor :next_link, :prev_link, :contents
 
-  def initialize(contents, next_link=nil)
+  def initialize(contents, next_link=nil, prev_link=nil)
     @next_link = next_link
-    @contents = contents
+    @prev_link = prev_link
+    @contents  = contents
+  end
+
+  def first?
+    self.prev_link.class != Link
   end
 
   def last?
@@ -15,28 +20,20 @@ class Link
   def add(link)
     if self.last?
       self.next_link = link
+      link.prev_link = self
     else
       self.next_link.add(link)
     end
   end
 
-  def remove(link, parent_link)
+  def remove(link)
     if self == link
-      parent_link.next_link = link.next_link
+      self.prev_link.next_link = link.next_link
+      link.next_link.prev_link = self.prev_link unless link.next_link.nil?
     else
-      self.next_link.remove(link, self)
+      self.next_link.remove(link)
     end
   end
-
-  # def remove(link, list)
-  #   if list.first_link == link
-  #     list.first_link = link.next_link
-  #   elsif self.next_link == link
-  #     self.next_link = link.next_link
-  #   else
-  #     self.next_link.remove(link, list)
-  #   end
-  # end
 
   def get(index, position=0)
     if index == position
@@ -54,7 +51,7 @@ class Link
     end
   end
 
-  def size(counter)
+  def size(counter=1)
     if self.last?
       counter
     else
