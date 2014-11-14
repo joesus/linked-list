@@ -43,7 +43,7 @@ class Link
     end
   end
 
-  def index_of(searched_link, index)
+  def index_of(searched_link, index=0)
     if self == searched_link
       index
     else
@@ -56,6 +56,17 @@ class Link
       counter
     else
       self.next_link.size(counter+1)
+    end
+  end
+
+  def insert(link, index, position=0)
+    position ||= 0
+    if index == position
+      self.prev_link.next_link = link
+      link.prev_link = self.prev_link
+      link.next_link = self
+    else
+      self.next_link.insert(link, index, position + 1)
     end
   end
 

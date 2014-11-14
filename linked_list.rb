@@ -33,7 +33,7 @@ class LinkedList
   end
 
   def index_of(searched_link)
-    self.first_link.index_of(searched_link, 0)
+    self.first_link.index_of(searched_link)
   rescue NoMethodError
     nil
   end
@@ -42,5 +42,9 @@ class LinkedList
     self.first_link.get(index, 0)
   rescue NoMethodError
     nil
+  end
+
+  def insert(link, index)
+    self.first_link.insert(link, index)
   end
 end

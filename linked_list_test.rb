@@ -85,4 +85,25 @@ class LinkedListTest < MiniTest::Unit::TestCase
     assert_equal @link1.first?, true
     assert_equal @link2.first?, false
   end
+
+  def test_insert_link_at_first_position
+    @list.add(@link2)
+    @list.insert(@link3, 0)
+    assert_equal @link3, @list.get(0)
+  end
+
+  def test_inserted_link_is_configured_correctly
+    @list.add(@link2)
+    @list.insert(@link3, 0)
+    assert_equal @link3.first?, true
+    assert_equal @link3.next_link, @link1
+  end
+
+  def test_insert_link_at_third_position
+    @list.add(@link2).add(@link3).add(@link4)
+    @list.insert(@link5, 2)
+    assert_equal @link5, @list.get(2)
+    assert_equal @link5.prev_link, @link2
+    assert_equal @link5.next_link, @link3
+  end
 end
