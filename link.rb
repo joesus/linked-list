@@ -62,10 +62,14 @@ class Link
   def insert(link, index, position=0)
     position ||= 0
     if index == position
-      self.prev_link.next_link = link
       link.prev_link = self.prev_link
+      self.prev_link.next_link = link
       link.next_link = self
+      self.prev_link = link
+    elsif self.last? && index == position + 1
+      self.next_link.insert(link, index, position + 1)
     else
+      link.next_link = Link.new(nil, nil, self)
       self.next_link.insert(link, index, position + 1)
     end
   end

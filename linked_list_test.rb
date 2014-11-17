@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 # require 'minitest/pride'
 require_relative 'linked_list'
+require_relative 'array'
 
 class LinkedListTest < MiniTest::Unit::TestCase
 
@@ -10,100 +11,144 @@ class LinkedListTest < MiniTest::Unit::TestCase
     @link3 = Link.new("third link")
     @link4 = Link.new("fourth link")
     @link5 = Link.new("fifth link")
-    @list = LinkedList.new(@link1)
+    @linked_list = LinkedList.new(@link1)
+    @array = LLArray.new("first link")
+    @empty_array = LLArray.new
   end
 
   def test_first_link_is_first
-    assert_equal @list.first_link, @list.first
+    assert_equal @linked_list.first_link, @linked_list.first
   end
 
   def test_size_returns_size
-    assert_equal @list.size, 1
+    assert_equal @linked_list.size, 1
   end
 
   def test_adding_a_link_increases_the_size
-    @list.add(@link2)
-    assert_equal 2, @list.size
+    @linked_list.add(@link2)
+    assert_equal 2, @linked_list.size
   end
 
   def test_removing_link_decreases_the_size
-    @list.add(@link2)
-    @list.remove(@link2)
-    assert_equal 1, @list.size
+    @linked_list.add(@link2)
+    @linked_list.remove(@link2)
+    assert_equal 1, @linked_list.size
   end
 
   def test_removing_first_link_decreases_size
-    @list.add(@link2)
-    @list.remove(@link1)
-    assert_equal 1, @list.size
+    @linked_list.add(@link2)
+    @linked_list.remove(@link1)
+    assert_equal 1, @linked_list.size
   end
 
   def test_removing_first_link_changes_first_link
-    @list.add(@link2).add(@link3)
-    @list.remove(@link1)
-    assert_equal @link2, @list.first
+    @linked_list.add(@link2).add(@link3)
+    @linked_list.remove(@link1)
+    assert_equal @link2, @linked_list.first
   end
 
   def test_chaining_add
-    @list.add(@link2).add(@link3)
-    assert_equal 3, @list.size
+    @linked_list.add(@link2).add(@link3)
+    assert_equal 3, @linked_list.size
   end
 
   def test_index_of_returns_the_correct_index
-    @list.add(@link2).add(@link3)
-    assert_equal 2, @list.index_of(@link3)
+    @linked_list.add(@link2).add(@link3)
+    assert_equal 2, @linked_list.index_of(@link3)
   end
 
   def test_removing_third_link_works
-    @list.add(@link2).add(@link3).add(@link4)
-    @list.remove(@link3)
-    assert_equal 3, @list.size
+    @linked_list.add(@link2).add(@link3).add(@link4)
+    @linked_list.remove(@link3)
+    assert_equal 3, @linked_list.size
   end
 
   def test_removing_fourth_link_works
-    @list.add(@link2).add(@link3).add(@link4).add(@link5)
-    @list.remove(@link4)
-    assert_equal 4, @list.size
+    @linked_list.add(@link2).add(@link3).add(@link4).add(@link5)
+    @linked_list.remove(@link4)
+    assert_equal 4, @linked_list.size
   end
   
   def test_get_index_zero
-    assert_equal @link1, @list.get(0)
+    assert_equal @link1, @linked_list.get(0)
   end
 
   def test_get_index
-    @list.add(@link2).add(@link3).add(@link4).add(@link5)
-    assert_equal @link3, @list.get(2)
+    @linked_list.add(@link2).add(@link3).add(@link4).add(@link5)
+    assert_equal @link3, @linked_list.get(2)
   end
 
   def test_adding_link_sets_previous_link_to_self
-    @list.add(@link2)
-    assert_equal @link2.prev_link, @list.first_link
+    @linked_list.add(@link2)
+    assert_equal @link2.prev_link, @linked_list.first_link
   end
 
   def test_first_method_determines_link_position
-    @list.add(@link2)
+    @linked_list.add(@link2)
     assert_equal @link1.first?, true
     assert_equal @link2.first?, false
   end
 
   def test_insert_link_at_first_position
-    @list.add(@link2)
-    @list.insert(@link3, 0)
-    assert_equal @link3, @list.get(0)
+    @linked_list.add(@link2)
+    @linked_list.insert(@link3, 0)
+    assert_equal @link3, @linked_list.get(0)
   end
 
   def test_inserted_link_is_configured_correctly
-    @list.add(@link2)
-    @list.insert(@link3, 0)
+    @linked_list.add(@link2)
+    @linked_list.insert(@link3, 0)
     assert_equal @link3.first?, true
     assert_equal @link3.next_link, @link1
   end
 
   def test_insert_link_at_third_position
-    @list.add(@link2).add(@link3).add(@link4)
-    @list.insert(@link5, 2)
-    assert_equal @link5, @list.get(2)
+    @linked_list.add(@link2).add(@link3).add(@link4)
+    @linked_list.insert(@link5, 2)
+    assert_equal @link5, @linked_list.get(2)
     assert_equal @link5.prev_link, @link2
     assert_equal @link5.next_link, @link3
   end
+
+  def test_adding_to_empty_array
+    @empty_array[0] = @link1
+    assert_equal @empty_array[0], @link1
+  end
+
+  def test_adding_to_existing_array
+    @array[1] = "second link"
+    assert_equal @array[1], "second link"
+  end
+
+  def test_get_first_position_of_array
+    assert_equal @array[0], "first link"
+  end
+
+  def test_get_second_position_of_array
+    @array[1] = "second link"
+    assert_equal @array[1], "second link"
+  end
+
+  def test_array_size_works
+    @array[1] = "test link"
+    assert_equal @array.size, 2
+  end
+
+  def test_shovels_work
+    @array << "second link"
+    assert_equal @array.size, 2
+    assert_equal @array[1], "second link"
+  end
+
+  def test_to_string_works_with_two_items
+    @array << "second link"
+    assert_equal "['first link','second link']", @array.to_s
+  end
+
+  def test_to_string_works_with_three_items
+    @array << "second link"
+    @array << "third link"
+    assert_equal "['first link','second link','third link']", @array.to_s
+  end
+
 end
