@@ -27,6 +27,13 @@ class LLArray
     self.linked_list.add(link)
   end
 
+  def +(array)
+    array.each do |content|
+      self << content
+    end
+    self
+  end
+
   def to_s
     string = ""
     self.each do |contents|
