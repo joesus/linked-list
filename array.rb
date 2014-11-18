@@ -13,8 +13,19 @@ class LLArray
     end
   end
 
-  def [](index)
-    self.linked_list.get(index).contents
+  def [](index, length=nil)
+    link ||= self.linked_list.get(index)
+    if length.nil?
+      link.contents
+    else
+      return nil if self.size < length
+      temp_array = LLArray.new
+      length.times do
+        temp_array << link.contents
+        link = link.next_link
+      end
+      temp_array.to_s
+    end
   end
 
   def []=(index, content)
@@ -32,6 +43,40 @@ class LLArray
       self << content
     end
     self
+  end
+
+  def -(array)
+    array.each do |content|
+      # check if a link with the contents is present
+      if self.include?(content)
+        # find and remove the link
+        link ||= self.linked_list.first_link
+        until link.contents == content
+          link = link.next_link
+        end
+        self.linked_list.remove(link)
+      end
+    end
+    self
+  end
+
+  def include?(content)
+    switch = false
+    self.each do |item|
+      switch = item == content
+      break if switch
+    end
+    switch
+  end
+
+  def select(&block)
+    new_array = LLArray.new
+    self.each do |x|
+      if yield(x)
+        new_array << x
+      end
+    end
+    new_array.to_s
   end
 
   def to_s
