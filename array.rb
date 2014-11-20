@@ -39,31 +39,45 @@ class LLArray
   end
 
   def +(array)
-    array.each do |content|
-      self << content
+    array.each do |link|
+      self << link.contents
     end
     self
   end
 
   def -(array)
-    array.each do |content|
+    array.each do |item|
       # check if a link with the contents is present
-      if self.include?(content)
+      if self.include?(item.contents)
         # find and remove the link
         link ||= self.linked_list.first_link
-        until link.contents == content
+        until link.contents == item.contents
           link = link.next_link
         end
         self.linked_list.remove(link)
       end
     end
-    self
+    self.to_s
+  end
+
+  def clear
+    self.each do |link|
+      self.linked_list.remove(link)
+    end
+    self.to_s
+  end
+
+  def collect(&block)
+    self.each do |link|
+      link.contents = yield(link.contents)
+    end
+    self.to_s
   end
 
   def include?(content)
     switch = false
-    self.each do |item|
-      switch = item == content
+    self.each do |link|
+      switch = link.contents == content
       break if switch
     end
     switch
@@ -71,9 +85,9 @@ class LLArray
 
   def select(&block)
     new_array = LLArray.new
-    self.each do |x|
-      if yield(x)
-        new_array << x
+    self.each do |link|
+      if yield(link.contents)
+        new_array << link.contents
       end
     end
     new_array.to_s
@@ -81,8 +95,8 @@ class LLArray
 
   def to_s
     string = ""
-    self.each do |contents|
-      string << "'#{contents}',"
+    self.each do |link|
+      string << "'#{link.contents}',"
     end
     string.chop!
     "[#{string}]"
@@ -96,7 +110,7 @@ class LLArray
   def each(&block)
     link = self.linked_list.first_link
     while !link.nil?
-      yield(link.contents)
+      yield(link)
       link = link.next_link
     end
   end
