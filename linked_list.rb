@@ -18,6 +18,8 @@ class LinkedList
     if self.first_link
       self.first_link.add(link)
     else
+      # Handles a case where an array instantiates an empty linked list and adds links to it after the fact
+      link.prev_link = self unless link.nil?
       self.first_link = link
     end
   end
