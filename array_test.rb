@@ -113,4 +113,9 @@ class ArrayTest < MiniTest::Unit::TestCase
     assert_equal "['a!','b!','c!','d!','e!']", @alphabet.collect { |x| x + "!" }
   end
 
+  def test_collect!
+    @alphabet.collect! { |x| x + "!" }
+    assert_equal "['a!','b!','c!','d!','e!']", @alphabet.to_s
+  end
+
 end

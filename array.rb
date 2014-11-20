@@ -68,6 +68,15 @@ class LLArray
   end
 
   def collect(&block)
+    temp_array = LLArray.new
+
+    self.each do |link|
+      temp_array << yield(link.contents)
+    end
+    temp_array.to_s
+  end
+
+  def collect!(&block)
     self.each do |link|
       link.contents = yield(link.contents)
     end
