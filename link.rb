@@ -43,6 +43,14 @@ class Link
     end
   end
 
+  def search(content)
+    if content == self.contents
+      self
+    else
+      self.next_link.search(content)
+    end
+  end
+
   def index_of(searched_link, index=0)
     if self == searched_link
       index

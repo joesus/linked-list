@@ -24,7 +24,7 @@ class LLArray
         temp_array << link.contents
         link = link.next_link
       end
-      temp_array.to_s
+      temp_array
     end
   end
 
@@ -39,62 +39,37 @@ class LLArray
   end
 
   def +(array)
-    array.each do |link|
+    array.linked_list.each do |link|
       self << link.contents
     end
     self
   end
 
   def -(array)
-    array.each do |item|
-      # check if a link with the contents is present
-      if self.include?(item.contents)
-        # find and remove the link
-        link ||= self.linked_list.first_link
-        until link.contents == item.contents
-          link = link.next_link
-        end
-        self.linked_list.remove(link)
-      end
+    array.linked_list.each do |link|
+      self.include?(link.contents)
+      link_to_remove = self.linked_list.search(link.contents)
+      self.linked_list.remove(link_to_remove)
     end
-    self.to_s
+    self
   end
 
   def clear
-    self.each do |link|
-      self.linked_list.remove(link)
-    end
-    self.to_s
+    self.linked_list = nil
+    self
   end
 
-  def collect(&block)
-    temp_array = LLArray.new
-
-    self.each do |link|
-      temp_array << yield(link.contents)
-    end
-    temp_array.to_s
-  end
-
-  def collect!(&block)
-    self.each do |link|
-      link.contents = yield(link.contents)
-    end
-    self.to_s
+  def empty?
+    self.linked_list.nil?
   end
 
   def include?(content)
-    switch = false
-    self.each do |link|
-      switch = link.contents == content
-      break if switch
-    end
-    switch
+    !self.linked_list.search(content).nil?
   end
 
   def select(&block)
     new_array = LLArray.new
-    self.each do |link|
+    self.linked_list.each do |link|
       if yield(link.contents)
         new_array << link.contents
       end
@@ -103,12 +78,16 @@ class LLArray
   end
 
   def to_s
-    string = ""
-    self.each do |link|
-      string << "'#{link.contents}',"
+    if self.empty?
+      "[]"
+    else
+      string = ""
+      self.linked_list.each do |link|
+        string << "'#{link.contents}',"
+      end
+      string.chop!
+      "[#{string}]"
     end
-    string.chop!
-    "[#{string}]"
   end
 
   def length
@@ -117,11 +96,11 @@ class LLArray
   alias :size :length
 
   def each(&block)
-    link = self.linked_list.first_link
+    link = self.linked_list.first
     while !link.nil?
-      yield(link)
+      link.contents = yield(link.contents)
       link = link.next_link
     end
+    self
   end
-
 end

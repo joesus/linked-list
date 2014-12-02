@@ -15,12 +15,6 @@ class ArrayTest < MiniTest::Unit::TestCase
     @numbers << 1
     @numbers << 2
     @numbers << 3
-    @alphabet = LLArray.new
-    @alphabet  << "a"
-    @alphabet  << "b"
-    @alphabet  << "c"
-    @alphabet  << "d"
-    @alphabet  << "e"
   end
 
   def test_adding_to_empty_array
@@ -65,6 +59,7 @@ class ArrayTest < MiniTest::Unit::TestCase
   end
 
   def test_adding_two_arrays
+    @full_array
     @added_array = LLArray.new("fourth link")
     @added_array << "fifth link"
     @new_array = @full_array + @added_array
@@ -93,29 +88,24 @@ class ArrayTest < MiniTest::Unit::TestCase
     @more_numbers = LLArray.new
     @more_numbers << 2
     @more_numbers << 3
-    assert_equal "['1']", (@numbers - @more_numbers)
+    assert_equal "['1']", (@numbers - @more_numbers).to_s
   end
 
   def test_get_length_works_with_valid_length
-    assert_equal "['1','2','3']", @numbers[0, 3]
-    assert_equal "['2','3']", @numbers[1, 2]
+    assert_equal "['1','2','3']", @numbers[0, 3].to_s
+    assert_equal "['2','3']", @numbers[1, 2].to_s
   end
 
   def test_range_with_invalid_range_returns_nil
     assert_equal nil, @numbers[0, 8]
   end
 
-  def test_clear
-    assert_equal "[]", @numbers.clear
+  def test_clear_empties_array
+    assert_equal "[]", @numbers.clear.to_s
   end
 
-  def test_collect
-    assert_equal "['a!','b!','c!','d!','e!']", @alphabet.collect { |x| x + "!" }
+  def test_each_method
+    @full_array.each { |item| item += " modified" }
+    assert_equal "first link modified", @full_array[0]
   end
-
-  def test_collect!
-    @alphabet.collect! { |x| x + "!" }
-    assert_equal "['a!','b!','c!','d!','e!']", @alphabet.to_s
-  end
-
 end

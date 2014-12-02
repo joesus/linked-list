@@ -66,7 +66,7 @@ class LinkedListTest < MiniTest::Unit::TestCase
     @linked_list.remove(@link4)
     assert_equal 4, @linked_list.size
   end
-  
+
   def test_get_index_zero
     assert_equal @link1, @linked_list.get(0)
   end
@@ -106,5 +106,17 @@ class LinkedListTest < MiniTest::Unit::TestCase
     assert_equal @link5, @linked_list.get(2)
     assert_equal @link5.prev_link, @link2
     assert_equal @link5.next_link, @link3
+  end
+
+  def test_search_by_content
+    @linked_list.add(@link2).add(@link3)
+    assert_equal @link2, @linked_list.search("second link")
+    assert_equal @link3, @linked_list.search("third link")
+  end
+
+  def test_each_method
+    @linked_list.add(@link2).add(@link3)
+    @linked_list.each { |link| link.contents += " modified" }
+    assert_equal "first link modified", @linked_list.first_link.contents
   end
 end

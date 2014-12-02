@@ -18,8 +18,6 @@ class LinkedList
     if self.first_link
       self.first_link.add(link)
     else
-      # Handles a case where an array instantiates an empty linked list and adds links to it after the fact
-      link.prev_link = self unless link.nil?
       self.first_link = link
     end
   end
@@ -38,6 +36,12 @@ class LinkedList
     nil
   end
 
+  def search(content)
+    self.first_link.search(content)
+  rescue NoMethodError
+    nil
+  end
+
   def get(index)
     self.first_link.get(index, 0)
   rescue NoMethodError
@@ -48,5 +52,14 @@ class LinkedList
     self.first_link.insert(link, index)
   rescue NoMethodError
     add(link)
+  end
+
+  def each(&block)
+    link = first
+    while !link.nil?
+      yield(link)
+      link = link.next_link
+    end
+    self
   end
 end
