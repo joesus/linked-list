@@ -5,12 +5,8 @@ class HashTest < MiniTest::Unit::TestCase
 
   def setup
     @hash = LLHash.new
-    @meal = LLHash.new
-    @meal["appetizer"] = "bacon-stuff"
-    @meal["salad"] 	= "waldorf"
-    @meal["entree"] = "steak"
-    @meal["side"] 	= "potatoes"
-    @meal["dessert"] = "cakes"
+    @meal = LLHash.new("appetizer", "bacon-stuff", "salad", "waldorf", "entree", "steak", "side", "potatoes", "dessert", "cakes")
+    @sandwich = LLHash.new("bread", "wheat", "meat", "turkey", "mustard")
   end
 
   def test_hash_values_default_to_nil
@@ -28,5 +24,10 @@ class HashTest < MiniTest::Unit::TestCase
 
   def test_to_s_works_with_full_hash
     assert_equal "{appetizer: 'bacon-stuff', salad: 'waldorf', entree: 'steak', side: 'potatoes', dessert: 'cakes'}", @meal.to_s
+  end
+
+  def test_setting_hash_with_odd_values_defaults_last_value_to_nil
+  	@sandwich = LLHash.new("bread", "wheat", "meat", "turkey", "mustard")
+  	assert_equal "{bread: 'wheat', meat: 'turkey', mustard: 'nil'}", @sandwich.to_s
   end
 end

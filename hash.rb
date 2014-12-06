@@ -4,9 +4,14 @@ require_relative 'linked_list'
 class LLHash
   attr_accessor :linked_list, :default
 
-  def initialize(default=nil, *args)
-    self.default = default
-    self.linked_list = LinkedList.new
+  def initialize(*args)
+  	if args.length < 2
+  		self.default = args.first
+  	end
+  	self.linked_list = LinkedList.new
+  	args.each_slice(2) do |slice|
+  		self.linked_list.add(Link.new(key: slice[0], contents: slice[1]))
+  	end
   end
 
   def [](key)
@@ -26,7 +31,7 @@ class LLHash
   	else
   		string = ""
   		self.linked_list.each do |link|
-        string << "#{link.key}: '#{link.contents}', "
+        string << "#{link.key}: '#{link.contents || 'nil'}', "
       end
       2.times { string.chop! }
       "{#{string}}"
