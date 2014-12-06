@@ -8,7 +8,7 @@ class LLArray
   def initialize(content = nil)
     self.linked_list = LinkedList.new
     if !content.nil?
-      link = Link.new(content)
+      link = Link.new(contents: content)
       self.linked_list.add(link)
     end
   end
@@ -29,12 +29,12 @@ class LLArray
   end
 
   def []=(index, content)
-    link = Link.new(content)
+    link = Link.new(contents: content)
     self.linked_list.insert(link, index)
   end
 
   def <<(content)
-    link = Link.new(content)
+    link = Link.new(contents: content)
     self.linked_list.add(link)
   end
 

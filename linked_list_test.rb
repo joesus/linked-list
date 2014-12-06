@@ -6,11 +6,11 @@ require_relative 'array'
 class LinkedListTest < MiniTest::Unit::TestCase
 
   def setup
-    @link1 = Link.new("first link")
-    @link2 = Link.new("second link")
-    @link3 = Link.new("third link")
-    @link4 = Link.new("fourth link")
-    @link5 = Link.new("fifth link")
+    @link1 = Link.new(contents: "first link")
+    @link2 = Link.new(contents: "second link")
+    @link3 = Link.new(contents: "third link")
+    @link4 = Link.new(contents: "fourth link")
+    @link5 = Link.new(contents: "fifth link")
     @linked_list = LinkedList.new(@link1)
   end
 

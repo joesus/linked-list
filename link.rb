@@ -3,10 +3,11 @@ require "pry-nav"
 class Link
   attr_accessor :next_link, :prev_link, :contents
 
-  def initialize(contents, next_link=nil, prev_link=nil)
-    @next_link = next_link
-    @prev_link = prev_link
-    @contents  = contents
+  def initialize(args)
+    @next_link = args[:next_link]
+    @prev_link = args[:prev_link]
+    @contents  = args[:contents]
+    @key       = args[:key]
   end
 
   def first?
@@ -77,7 +78,7 @@ class Link
     elsif index == position + 1
       self.next_link.insert(link, index, position + 1)
     else
-      link.next_link = Link.new(nil, nil, self)
+      link.next_link = Link.new(contents: self)
       self.next_link.insert(link, index, position + 1)
     end
   end
