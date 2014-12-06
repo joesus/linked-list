@@ -48,6 +48,12 @@ class LinkedList
     nil
   end
 
+  def get_by_key(key)
+    self.first_link.get_by_key(key)
+  rescue NoMethodError
+    nil
+  end
+
   def insert(link, index)
     self.first_link.insert(link, index)
   rescue NoMethodError

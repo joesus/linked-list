@@ -11,6 +11,8 @@ class LinkedListTest < MiniTest::Unit::TestCase
     @link3 = Link.new(contents: "third link")
     @link4 = Link.new(contents: "fourth link")
     @link5 = Link.new(contents: "fifth link")
+    @keylink1 = Link.new(contents: "pizza", key: "food")
+    @keylink2 = Link.new(contents: "soda", key: "drink")
     @linked_list = LinkedList.new(@link1)
   end
 
@@ -118,5 +120,10 @@ class LinkedListTest < MiniTest::Unit::TestCase
     @linked_list.add(@link2).add(@link3)
     @linked_list.each { |link| link.contents += " modified" }
     assert_equal "first link modified", @linked_list.first_link.contents
+  end
+
+  def test_get_by_key
+    @linked_list.add(@keylink1).add(@keylink2)
+    assert_equal "pizza", @linked_list.get_by_key("food").contents
   end
 end

@@ -1,7 +1,7 @@
 require "pry-nav"
 
 class Link
-  attr_accessor :next_link, :prev_link, :contents
+  attr_accessor :next_link, :prev_link, :contents, :key
 
   def initialize(args)
     @next_link = args[:next_link]
@@ -41,6 +41,14 @@ class Link
       self
     else
       self.next_link.get(index, position + 1)
+    end
+  end
+
+  def get_by_key(key)
+    if key == self.key
+      self
+    else
+      self.next_link.get_by_key(key)
     end
   end
 
