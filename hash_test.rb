@@ -39,4 +39,9 @@ class HashTest < MiniTest::Unit::TestCase
     @sandwich = LLHash.new("bread", "wheat", "meat", "turkey", "mustard")
     assert_equal "{mustard: 'nil', bread: 'wheat', meat: 'turkey'}", @sandwich.to_s
   end
+
+  def test_change_value
+    @hash["name"] = "Ben"
+    assert_equal "Ben", @hash["name"]
+  end
 end

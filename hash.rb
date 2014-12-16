@@ -6,8 +6,10 @@ class LLHash
   attr_accessor :linked_list, :values_array, :default
 
   def initialize(*args)
-    self.values_array = []
+    self.values_array = Array.new(10)
+    self.values_array.map! { |x| x = LinkedList.new }
     if args.length < 2
+      # sets a default value for unrecognized keys
       self.default = args.first
     end
     args.each_slice(2) do |slice|
@@ -20,10 +22,10 @@ class LLHash
   end
 
   def [](key)
-    index = Digest::MD5.hexdigest(key).hex % 10
+    index = hash_key(key)
     if self.values_array[index] && self.values_array[index].size > 1
       self.values_array[index].get_by_key(key).contents
-    elsif self.values_array[index]
+    elsif self.values_array[index].size > 0
       self.values_array[index].first.contents
     else
       self.default
@@ -51,11 +53,20 @@ class LLHash
 
   def add_pair(key, value)
     link = Link.new(key: key, contents: value)
-    index = Digest::MD5.hexdigest(key).hex % 10
-    if self.values_array[index].nil?
-      self.values_array[index] = LinkedList.new(link)
-    else
+    index = hash_key(key)
+    if self.values_array[index].first.nil?
       self.values_array[index].add(link)
+    else
+      if self.values_array[index].get_by_key(key).nil?
+        self.values_array[index].add(link)
+      else
+        self.values_array[index].get_by_key(key).contents = value
+      end
     end
   end
+
+  def hash_key(key)
+    Digest::MD5.hexdigest(key).hex % 10
+  end
+  
 end
