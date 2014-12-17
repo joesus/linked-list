@@ -22,14 +22,12 @@ class LLHash
   end
 
   def [](key)
+    get_link_from_key(key).contents
+  end
+
+  def delete(key)
     index = hash_key(key)
-    if self.values_array[index] && self.values_array[index].size > 1
-      self.values_array[index].get_by_key(key).contents
-    elsif self.values_array[index].size > 0
-      self.values_array[index].first.contents
-    else
-      self.default
-    end
+    self.values_array[index].remove(get_link_from_key(key))
   end
 
   def keys
@@ -49,8 +47,8 @@ class LLHash
       "{}"
     else
       string = ""
-      self.each do |link|
-        string << "#{link.key}: '#{link.contents || 'nil'}', " rescue nil
+      keys.each do |key|
+        string << "#{key}: '#{self[key] || 'nil'}', " rescue nil
       end
       2.times { string.chop! }
       "{#{string}}"
@@ -81,5 +79,14 @@ class LLHash
 
   def hash_key(key)
     Digest::MD5.hexdigest(key).hex % 10
+  end
+
+  def get_link_from_key(key)
+    index = hash_key(key)
+    if self.values_array[index].size > 0
+      link = self.values_array[index].get_by_key(key)
+    else
+      link = Link.new(key: nil, contents: self.default)
+    end
   end
 end
