@@ -36,10 +36,18 @@ class LLHash
     tmp_array.sort
   end
 
+  def has_key?(key)
+    keys.include?(key)
+  end
+
   def values
     tmp_array = []
     self.each { |link| tmp_array << "#{link.contents}" }
     tmp_array.sort
+  end
+
+  def has_value?(value)
+    values.include?(value)
   end
 
   def to_s
