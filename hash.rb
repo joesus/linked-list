@@ -61,6 +61,10 @@ class LLHash
     end
   end
 
+  def eql?(hash)
+    hash.to_s.eql?(self.to_s)
+  end
+
   private
 
   def add_pair(key, value)

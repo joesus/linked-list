@@ -69,4 +69,10 @@ class HashTest < MiniTest::Unit::TestCase
   def test_size
     assert_equal 5, @meal.size
   end
+
+  def test_eql
+    set_one = LLHash.new("one", 1, "two", 2, "three", 3)
+    set_two = LLHash.new("one", 1, "two", 2, "three", 3)
+    assert_equal true, set_one.eql?(set_two)
+  end
 end
