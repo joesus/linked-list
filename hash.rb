@@ -34,9 +34,13 @@ class LLHash
 
   def keys
     tmp_array = []
-    self.each do |link|
-      tmp_array << "#{link.key}"
-    end
+    self.each { |link| tmp_array << "#{link.key}" }
+    tmp_array.sort
+  end
+
+  def values
+    tmp_array = []
+    self.each { |link| tmp_array << "#{link.contents}" }
     tmp_array.sort
   end
 

@@ -48,4 +48,9 @@ class HashTest < MiniTest::Unit::TestCase
   def test_keys_method
     assert_equal ["appetizer", "dessert", "entree", "salad", "side"], @meal.keys
   end
+
+  def test_values_method
+    @meal["other_value"] = ["a standalone array"]
+    assert_equal ["[\"a standalone array\"]", "bacon-stuff", "cakes", "potatoes", "steak", "waldorf"], @meal.values
+  end
 end

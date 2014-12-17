@@ -62,7 +62,7 @@ class LinkedList
 
   def each(&block)
     link = first
-    while !link.nil?
+    while link
       yield(link)
       link = link.next_link
     end
