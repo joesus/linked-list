@@ -65,4 +65,8 @@ class HashTest < MiniTest::Unit::TestCase
     @hash.delete("a")
     assert_equal "{b: '200', first_name: 'Joe'}", @hash.to_s
   end
+
+  def test_size
+    assert_equal 5, @meal.size
+  end
 end

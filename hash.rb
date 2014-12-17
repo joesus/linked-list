@@ -51,6 +51,10 @@ class LLHash
     "{#{string}}"
   end
 
+  def size
+    keys.size
+  end
+
   def each(&block)
     self.values_array.each do |linked_list|
       linked_list.each(&block) unless linked_list.size < 1
