@@ -5,7 +5,7 @@ class HashTest < MiniTest::Unit::TestCase
 
   def setup
     @hash = LLHash.new
-    @hash["name"] = "Joe"
+    @hash["first_name"] = "Joe"
     @meal = LLHash.new("appetizer", "bacon-stuff", "salad", "waldorf", "entree", "steak", "side", "potatoes", "dessert", "cakes")
   end
 
@@ -14,7 +14,7 @@ class HashTest < MiniTest::Unit::TestCase
   end
 
   def test_to_s
-    assert_equal "{name: 'Joe'}", @hash.to_s
+    assert_equal "{first_name: 'Joe'}", @hash.to_s
   end
 
   def test_to_s_works_with_full_hash
@@ -41,7 +41,11 @@ class HashTest < MiniTest::Unit::TestCase
   end
 
   def test_change_value
-    @hash["name"] = "Ben"
-    assert_equal "Ben", @hash["name"]
+    @hash["first_name"] = "Ben"
+    assert_equal "Ben", @hash["first_name"]
+  end
+
+  def test_keys_method
+    assert_equal ["appetizer", "dessert", "entree", "salad", "side"], @meal.keys
   end
 end

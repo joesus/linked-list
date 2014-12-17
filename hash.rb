@@ -32,20 +32,30 @@ class LLHash
     end
   end
 
+  def keys
+    tmp_array = []
+    self.each do |link|
+      tmp_array << "#{link.key}"
+    end
+    tmp_array.sort
+  end
+
   def to_s
     if self.values_array.empty?
       "{}"
     else
       string = ""
-      self.values_array.each do |linked_list|
-        unless linked_list.nil?
-          linked_list.each do |link|
-            string << "#{link.key}: '#{link.contents || 'nil'}', " rescue nil
-          end
-        end
+      self.each do |link|
+        string << "#{link.key}: '#{link.contents || 'nil'}', " rescue nil
       end
       2.times { string.chop! }
       "{#{string}}"
+    end
+  end
+
+  def each(&block)
+    self.values_array.each do |linked_list|
+      linked_list.each(&block) unless linked_list.size < 1
     end
   end
 
@@ -68,5 +78,4 @@ class LLHash
   def hash_key(key)
     Digest::MD5.hexdigest(key).hex % 10
   end
-  
 end
