@@ -43,16 +43,12 @@ class LLHash
   end
 
   def to_s
-    if self.values_array.empty?
-      "{}"
-    else
-      string = ""
-      keys.each do |key|
-        string << "#{key}: '#{self[key] || 'nil'}', " rescue nil
-      end
-      2.times { string.chop! }
-      "{#{string}}"
+    string = ""
+    keys.each do |key|
+      string << "#{key}: '#{self[key] || 'nil'}', " rescue nil
     end
+    2.times { string.chop! }
+    "{#{string}}"
   end
 
   def each(&block)

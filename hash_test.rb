@@ -21,6 +21,11 @@ class HashTest < MiniTest::Unit::TestCase
     assert_equal "{appetizer: 'bacon-stuff', dessert: 'cakes', entree: 'steak', salad: 'waldorf', side: 'potatoes'}", @meal.to_s
   end
 
+  def test_to_s_works_with_empty_hash
+    @empty_hash = LLHash.new
+    assert_equal "{}", @empty_hash.to_s
+  end
+
   def test_duplicate_hash_keys_are_retrievable
     @hash["asdf"] = "123"
     @hash["asdf3"] = "abc"
