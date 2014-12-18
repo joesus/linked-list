@@ -97,7 +97,7 @@ class LLArray
 
   def each(&block)
     link = self.linked_list.first
-    while !link.nil?
+    while link
       link.contents = yield(link.contents)
       link = link.next_link
     end
