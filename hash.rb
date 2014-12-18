@@ -32,7 +32,7 @@ class LLHash
 
   def keys
     tmp_array = []
-    self.each { |link| tmp_array << "#{link.key}" }
+    self.each { |key| tmp_array << "#{key}" }
     tmp_array.sort
   end
 
@@ -42,7 +42,7 @@ class LLHash
 
   def values
     tmp_array = []
-    self.each { |link| tmp_array << "#{link.contents}" }
+    self.each { |key, value| tmp_array << "#{value}" }
     tmp_array.sort
   end
 
@@ -65,7 +65,9 @@ class LLHash
 
   def each(&block)
     self.values_array.each do |linked_list|
-      linked_list.each(&block) unless linked_list.size < 1
+      linked_list.each do |link|
+        yield(link.key, link.contents)
+      end
     end
   end
 
