@@ -72,7 +72,19 @@ class LLHash
   end
 
   def eql?(hash)
-    hash.to_s.eql?(self.to_s)
+    switch = true
+    self.each do |key|
+      switch = false if self[key] != hash[key]
+      break if self[key] != hash[key]
+    end
+    if switch
+      hash.each do |key|
+        switch = false if self[key] != hash[key]
+        break if self[key] != hash[key]
+      end
+      switch
+    end
+    switch
   end
 
   private

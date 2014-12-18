@@ -76,6 +76,18 @@ class HashTest < MiniTest::Unit::TestCase
     assert_equal true, set_one.eql?(set_two)
   end
 
+  def test_unequal
+    set_one = LLHash.new("one", 1, "two", 2, "three", 3)
+    set_two = LLHash.new("one", 1, "two", 3, "three", 3)
+    assert_equal false, set_one.eql?(set_two)
+  end
+
+  def test_unequal_second_way
+    set_one = LLHash.new("one", 1, "two", 2, "three", 3)
+    set_two = LLHash.new("one", 1, "two", 2, "three", 3, "four", 4)
+    assert_equal false, set_one.eql?(set_two)
+  end
+
   def test_has_key
     assert_equal true, @meal.has_key?("appetizer")
     assert_equal false, @meal.has_key?("shrimp course")
